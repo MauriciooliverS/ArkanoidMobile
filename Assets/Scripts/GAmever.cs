@@ -73,7 +73,7 @@ public class GAmever : MonoBehaviour
          textoPontos2.text = bolinha.pontos.ToString() + " Pontos" ;
          textoPontos3.text = bolinha.pontos.ToString() + " Pontos" ;
          textoPontos4.text = bolinha.pontos.ToString() + " Pontos" ;
-         if ( bolinha.pontos == 81 )
+         if ( bolinha.pontos == 72 )
          {
             GanhaPlayer();
          }
