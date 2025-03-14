@@ -5,11 +5,14 @@ using UnityEngine;
 public class Plataforma : MonoBehaviour
 {
     private Rigidbody2D rB2D;
-    public float Speed = 1.0f;
+    public float Speed = 10f;
     public float bounceForce = 10f;
     public Bola bolinha;
     public GAmever gameOver;
- 
+
+    private bool movendoEsquerda = false;
+    private bool movendoDireita = false;
+
     void Start()
     {
         rB2D = GetComponent<Rigidbody2D>();
@@ -22,51 +25,53 @@ public class Plataforma : MonoBehaviour
 
     void Update()
     {
-        
-        if (Input.GetKey(KeyCode.RightArrow))
+        // Movimento pelo teclado e toque na tela
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || movendoDireita)
         {
-            rB2D.transform.Translate(Speed *Time.deltaTime, 0, 0);
+            rB2D.transform.Translate(Speed * Time.deltaTime, 0, 0);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || movendoEsquerda)
         {
-            rB2D.transform.Translate(Speed *Time.deltaTime, 0, 0);
+            rB2D.transform.Translate(-Speed * Time.deltaTime, 0, 0);
         }
-        if (Input.GetKey(KeyCode.A))
-        {
-            rB2D.transform.Translate(-Speed *Time.deltaTime, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            rB2D.transform.Translate(-Speed *Time.deltaTime, 0, 0);
-        }
-
-       
     }
 
-private void OnCollisionEnter2D(Collision2D collision)
+    // Métodos para os botões (Event Trigger)
+    public void MoverEsquerdaPressionado()
+    {
+        movendoEsquerda = true;
+    }
+
+    public void MoverEsquerdaSolto()
+    {
+        movendoEsquerda = false;
+    }
+
+    public void MoverDireitaPressionado()
+    {
+        movendoDireita = true;
+    }
+
+    public void MoverDireitaSolto()
+    {
+        movendoDireita = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bola"))
         {
-
-
             Vector2 contactPoint = collision.contacts[0].point;
             Vector2 platformCenter = GetComponent<Collider2D>().bounds.center;
 
-
-            // Calcula a dire��o do impulso com base no ponto de colis�o
             float hitFactor = (contactPoint.x - platformCenter.x) / (GetComponent<Collider2D>().bounds.size.x / 2);
-             // Aplica o impulso na bola
+
             Rigidbody2D ballRb = collision.gameObject.GetComponent<Rigidbody2D>();
             if (ballRb != null)
             {
-                // Aplique o impulso com base no hitFactor e na for�a de impulso
-                Vector2 bounceDirection = new Vector2(hitFactor, 1).normalized; // Dire��o para cima e para os lados
-                ballRb.linearVelocity = bounceDirection * bounceForce; // Aplica o impulso na bola
+                Vector2 bounceDirection = new Vector2(hitFactor, 1).normalized;
+                ballRb.linearVelocity = bounceDirection * bounceForce;
             }
-
-
         }
     }
 }
-
-
