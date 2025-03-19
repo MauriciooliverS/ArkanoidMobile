@@ -25,15 +25,16 @@ public class Plataforma : MonoBehaviour
 
     void Update()
     {
-        // Movimento pelo teclado e toque na tela
+         //Movimento pelo teclado e toque na tela
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) || movendoDireita)
-        {
-            rB2D.transform.Translate(Speed * Time.deltaTime, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || movendoEsquerda)
-        {
-            rB2D.transform.Translate(-Speed * Time.deltaTime, 0, 0);
-        }
+         {
+             rB2D.transform.Translate(Speed * Time.deltaTime, 0, 0);
+         }
+         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || movendoEsquerda)
+         {
+             rB2D.transform.Translate(-Speed * Time.deltaTime, 0, 0);
+         }
+
     }
 
     // Métodos para os botões (Event Trigger)
